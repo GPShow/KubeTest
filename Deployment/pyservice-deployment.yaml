@@ -25,7 +25,7 @@ spec:
 #        env:                        # Для передачи чувствительных данных в переменные окружения используем Secret
 #        - name: API_KEY
 #          valueFrom:
-#            secretkeyRef:
+#            secretKeyRef:
 #              name: pyservice-secret
 #              key: API_KEY
 
