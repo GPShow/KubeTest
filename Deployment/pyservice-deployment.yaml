@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyservice-deployment
+  labels:
+    app: pyservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pyservice
+  template:
+    metadata:
+      labels:
+        app: pyservice
+    spec:
+      containers:
+      - name: pyservice
+        image: pyservice:latest
+        ports:
+        - containerPort: 5050
+        envFrom:
+        - configMapRef:
+            name: pyservice-config
+#        env:                        # Для передачи чувствительных данных в переменные окружения используем Secret
+#        - name: API_KEY
+#          valueFrom:
+#            secretkeyRef:
+#              name: pyservice-secret
+#              key: API_KEY
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pyservice-config
+  labels:
+    app: pyservice
+data:
+  DEBUG_MODE: 'false'
+  APP_ENV: 'dev'
+  CUSTOM_VAR: 'custom_var'
+
+
